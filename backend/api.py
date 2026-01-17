@@ -181,22 +181,13 @@ def extract_video():
             "downloadable_videos": []
         }), 500
 
+
 @app.route("/stream-download", methods=["POST"])
 def stream_download():
     try:
-        print("Headers:", dict(request.headers))
-        print("Raw data:", request.data)
-        data = request.get_json(silent=True)
-        print("JSON:", data)
-
-        if not data:
-            return jsonify({"error": "Invalid or missing JSON body"}), 400
-
-        url = data.get("url")
-        format_id = data.get("format_id")
-
-        if not url or not format_id:
-            return jsonify({"error": "url and format_id are required"}), 400
+        data = request.get_json()
+        url = data["url"]
+        format_id = data["format_id"]
 
         ydl_opts = {"quiet": True, "skip_download": True}
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
