@@ -5,6 +5,7 @@ from flask_cors import CORS
 import subprocess
 import json
 import requests
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -299,7 +300,7 @@ def home():
     })
 
 
-if __name__ == '__main__':
-    print("Starting Video Downloader Backend on http://0.0.0.0:5000")
-    print("Make sure ffmpeg is installed and in PATH")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    print(f"Starting server on port {port}")
+    app.run(host="0.0.0.0", port=port)
